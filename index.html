@@ -7,112 +7,158 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        /* Desabilita a seleção de texto */
+        * {
+            user-select: none;
+        }
         body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .form-container {
-            max-width: 500px;
-            margin: 50px auto;
-            background: white;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.6s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         .form-container h2 {
-            text-align: center;
-            color: #333;
+            font-size: 1.75rem;
             margin-bottom: 20px;
-            font-weight: 600;
+            color: #495057;
         }
         .form-control {
-            border-radius: 8px;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .btn {
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
         }
         .btn-primary {
-            background: #667eea;
+            background-color: #007bff;
             border: none;
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 8px;
-            transition: 0.3s;
+            transition: background-color 0.3s ease;
         }
         .btn-primary:hover {
-            background: #5a67d8;
+            background-color: #0056b3;
         }
         .file-label {
             cursor: pointer;
-            background: #f1f3f5;
+            font-weight: 600;
+            background-color: #f1f3f5;
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
+            width: 100%;
             display: block;
-            font-weight: 500;
         }
         .file-input {
             display: none;
         }
         .file-preview {
-            text-align: center;
+            margin-top: 10px;
             font-size: 14px;
-            margin-top: 8px;
-            color: #555;
+            color: #495057;
         }
-        .success-message {
+        .alert {
             display: none;
-            text-align: center;
-            margin-top: 15px;
-            padding: 10px;
-            background: #28a745;
+        }
+        .alert-success {
+            background-color: #28a745;
             color: white;
-            border-radius: 8px;
+        }
+        /* Responsividade */
+        @media (max-width: 576px) {
+            .form-container {
+                padding: 20px;
+            }
+            .form-container h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <div class="form-container">
-            <h2><i class="fas fa-box"></i> Cadastro de Pedido</h2>
+            <h2>Cadastro de Pedido</h2>
             <form id="pedidoForm">
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="solicitante" class="form-label">Solicitante</label>
                     <input type="text" class="form-control" id="solicitante" name="solicitante" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="produto" class="form-label">Produto (s)</label>
                     <input type="text" class="form-control" id="produto" name="produto" required placeholder="Digite os produtos desejados">
                 </div>
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="descricao" class="form-label">Descrição</label>
-                    <textarea class="form-control" id="descricao" name="descricao" rows="4" required></textarea>
+                    <textarea class="form-control" placeholder="Diga se é Acetato, Enanato, mg, etc" id="descricao" name="descricao" rows="4" required></textarea>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Comprovante</label>
-                    <label for="comprovante" class="file-label"><i class="fas fa-upload"></i> Escolher arquivo</label>
-                    <input type="file" id="comprovante" class="file-input" name="comprovante" required>
+                <div class="mb-4">
+                    <label for="comprovante" class="form-label">Comprovante</label>
+                    <label for="comprovante" class="file-label">
+                        <i class="fas fa-upload"></i> Escolher arquivo
+                        <input type="file" id="comprovante" class="file-input" name="comprovante" required>
+                    </label>
                     <div id="filePreview" class="file-preview"></div>
                 </div>
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
-                <div id="successMessage" class="success-message">Pedido cadastrado com sucesso!</div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <div id="successMessage" class="alert alert-success">Pedido cadastrado com sucesso!</div>
+                </div>
             </form>
         </div>
     </div>
+
     <script>
+        const BASE_ROUTE = "https://0455-2804-1054-3013-eba0-39f2-2a4a-4791-79db.ngrok-free.app/pedidos"
+        // Exibe o nome do arquivo quando um arquivo é escolhido
         document.getElementById('comprovante').addEventListener('change', function () {
             const file = this.files[0];
-            document.getElementById('filePreview').textContent = file ? `Arquivo escolhido: ${file.name}` : '';
+            const filePreview = document.getElementById('filePreview');
+            if (file) {
+                filePreview.textContent = `Arquivo escolhido: ${file.name}`;
+            } else {
+                filePreview.textContent = '';
+            }
         });
-        document.getElementById('pedidoForm').addEventListener('submit', function (e) {
+
+        // Envio do formulário
+        document.getElementById('pedidoForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            document.getElementById('successMessage').style.display = 'block';
-            setTimeout(() => { document.getElementById('successMessage').style.display = 'none'; }, 3000);
-            this.reset();
+            const formData = new FormData(e.target);
+            const response = await fetch(`${BASE_ROUTE}`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            if (response.ok) {
+                // Exibe mensagem de sucesso
+                document.getElementById('successMessage').style.display = 'block';
+                e.target.reset(); // Limpa o formulário após o envio
+            } else {
+                alert('Erro ao cadastrar pedido: ' + result.message);
+            }
         });
+
+        document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        alert('Copiar está desativado.');
+        });
+
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            alert('Colar está desativado.');
+        });
+
     </script>
 </body>
 </html>
