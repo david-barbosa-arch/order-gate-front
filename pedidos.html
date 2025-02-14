@@ -14,42 +14,64 @@
         /* Desabilita a seleção de texto */
         * {
             user-select: none;
+            box-sizing: border-box;
         }
         body {
-            background-color: #f0f4f8;
+            background-color: #f4f6f9;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+            color: #495057;
+            margin: 0;
+        }
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin-top: 30px;
         }
         .card {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
         }
         .card-header {
-            background-color: #6c757d;
+            background-color: #007bff;
             color: #fff;
-            border-radius: 15px 15px 0 0;
-            padding: 15px;
+            font-size: 1.25rem;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
         }
-        h2 {
-            font-size: 1.75rem;
+        .card-header h2 {
+            margin: 0;
             font-weight: bold;
         }
         .table th, .table td {
             text-align: center;
             vertical-align: middle;
-            padding: 1rem;
+            padding: 12px;
         }
         .table th {
-            background-color: #495057;
-            color: #fff;
+            background-color: #f8f9fa;
+            color: #495057;
             font-weight: 600;
         }
         .table tbody tr:hover {
-            background-color: #e9ecef;
+            background-color: #f1f3f5;
             transition: background-color 0.3s;
         }
         .table-bordered td, .table-bordered th {
             border: 1px solid #dee2e6;
+        }
+        .btn {
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 0.875rem;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
         }
         .btn-link {
             color: #007bff;
@@ -57,7 +79,7 @@
         .btn-link:hover {
             text-decoration: underline;
         }
-        /* Responsividade e Design Moderno */
+        /* Responsividade */
         @media (max-width: 768px) {
             .table th, .table td {
                 font-size: 14px;
@@ -74,7 +96,7 @@
                 font-size: 1.25rem;
             }
         }
-        /* Animação ao carregar a tabela */
+        /* Animação de fade in */
         .table tbody tr {
             opacity: 0;
             animation: fadeIn 0.5s forwards;
@@ -90,17 +112,21 @@
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <!-- Card para dar um melhor estilo -->
+    <div class="container">
+        <!-- Card para a tabela de pedidos -->
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h2 class="mb-0">Lista de Pedidos</h2>
-                <!-- Botões de ação -->
-                <div>
-                    <button class="btn btn-danger" onclick="excluirTodosPedidos()">Excluir Todos</button>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h2><i class="fas fa-box-open"></i> Lista de Pedidos</h2>
+                <div class="d-flex align-items-center">
+                    <!-- Contador de pedidos -->
+                    <div class="me-3">
+                        <span class="badge bg-info" id="pedidoCount">Carregando...</span> <!-- Contador -->
+                    </div>
+                    <button class="btn btn-danger" onclick="excluirTodosPedidos()"><i class="fas fa-trash"></i> Excluir Todos</button>
                     <!-- <button class="btn btn-primary" onclick="gerarPDF()">Gerar PDF</button> -->
                 </div>
             </div>
+            
             <div class="card-body">
                 <!-- Tabela Responsiva -->
                 <div class="table-responsive">
@@ -140,6 +166,7 @@
             const pedidos = await response.json();
             const tbody = document.getElementById('pedidoTableBody');
             tbody.innerHTML = '';
+            pedidoCount.textContent = "Total de Pedidos: " + pedidos.length;
 
             pedidos.forEach(pedido => {
                 const row = document.createElement('tr');
@@ -154,7 +181,6 @@
             });
         }
 
-
         async function excluirTodosPedidos() {
             if (confirm("Tem certeza que deseja excluir todos os pedidos?")) {
                 const response = await fetch(`${BASE_ROUTE}/pedidos`, { method: 'DELETE' });
@@ -164,10 +190,12 @@
             }
         }
         carregarPedidos();
+        
         document.addEventListener('copy', function(e) {
             e.preventDefault();
             alert('Copiar está desativado.');
         });
+
         document.addEventListener('paste', function(e) {
             e.preventDefault();
             alert('Colar está desativado.');
