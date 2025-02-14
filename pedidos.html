@@ -127,7 +127,7 @@
         const BASE_ROUTE = "https://0455-2804-1054-3013-eba0-39f2-2a4a-4791-79db.ngrok-free.app/pedidos"
         
         async function carregarPedidos() {
-            const response = await fetch(`${BASE_ROUTE}/pedidos`);
+            const response = await fetch(`${BASE_ROUTE}`);
             const pedidos = await response.json();
             
             const tbody = document.getElementById('pedidoTableBody');
