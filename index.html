@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -8,71 +7,111 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Desabilita a seleção de texto */
         * {
             user-select: none;
+            box-sizing: border-box;
         }
         body {
-            background-color: #f0f4f8;
+            background-color: #121212;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 40px auto;
+            background-color: #1f1f1f;
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .form-container:hover {
+            transform: translateY(-12px);
         }
         .form-container h2 {
-            font-size: 1.75rem;
-            margin-bottom: 20px;
-            color: #495057;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: #ff6f00;
+            font-weight: 700;
+            text-align: center;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
         }
         .form-control {
-            border-radius: 10px;
-            border: 1px solid #ced4da;
+            border-radius: 12px;
+            border: 1px solid #666;
+            padding: 15px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #333;
+            color: #fff;
         }
         .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            border-color: #ff6f00;
+            box-shadow: 0 0 0 0.2rem rgba(255, 111, 0, 0.25);
+        }
+
+        /* Estilo do Placeholder */
+        .form-control::placeholder {
+            color: #bbb; /* Cor do placeholder */
+            opacity: 1; /* Garante que o placeholder tenha visibilidade */
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1.1rem;
         }
         .btn {
-            border-radius: 10px;
-            padding: 12px 20px;
+            border-radius: 12px;
+            padding: 16px 30px;
             font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            background-color: #ff6f00;
+            color: #fff;
         }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
+        .btn:hover {
+            background-color: #e65100;
+            transform: translateY(-4px);
         }
         .file-label {
             cursor: pointer;
             font-weight: 600;
-            background-color: #f1f3f5;
+            background-color: #424242;
             border-radius: 8px;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
             width: 100%;
             display: block;
+            transition: background-color 0.3s ease;
+            color: #fff;
+        }
+        .file-label:hover {
+            background-color: #ff6f00;
         }
         .file-input {
             display: none;
         }
         .file-preview {
-            margin-top: 10px;
+            margin-top: 15px;
             font-size: 14px;
-            color: #495057;
+            color: #fff;
         }
         .alert {
             display: none;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
         }
         .alert-success {
             background-color: #28a745;
+            color: white;
+        }
+        .alert-danger {
+            background-color: #dc3545;
             color: white;
         }
         /* Responsividade */
@@ -81,7 +120,7 @@
                 padding: 20px;
             }
             .form-container h2 {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
             }
         }
     </style>
@@ -89,22 +128,22 @@
 <body>
     <div class="container mt-5">
         <div class="form-container">
-            <h2>Cadastro de Pedido</h2>
+            <h2><i class="fas fa-dumbbell"></i> Cadastro de Pedido</h2>
             <form id="pedidoForm">
                 <div class="mb-4">
-                    <label for="solicitante" class="form-label">Solicitante</label>
-                    <input type="text" class="form-control" id="solicitante" name="solicitante" required>
+                    <label for="solicitante" class="form-label"><i class="fas fa-user"></i> Solicitante</label>
+                    <input type="text" class="form-control" id="solicitante" name="solicitante" required placeholder="Digite o nome do solicitante">
                 </div>
                 <div class="mb-4">
-                    <label for="produto" class="form-label">Produto (s)</label>
+                    <label for="produto" class="form-label"><i class="fas fa-cogs"></i> Produto (s)</label>
                     <input type="text" class="form-control" id="produto" name="produto" required placeholder="Digite os produtos desejados">
                 </div>
                 <div class="mb-4">
-                    <label for="descricao" class="form-label">Descrição</label>
+                    <label for="descricao" class="form-label"><i class="fas fa-clipboard"></i> Descrição</label>
                     <textarea class="form-control" placeholder="Diga se é Acetato, Enanato, mg, etc" id="descricao" name="descricao" rows="4" required></textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="comprovante" class="form-label">Comprovante</label>
+                    <label for="comprovante" class="form-label"><i class="fas fa-file-upload"></i> Comprovante</label>
                     <label for="comprovante" class="file-label">
                         <i class="fas fa-upload"></i> Escolher arquivo
                         <input type="file" id="comprovante" class="file-input" name="comprovante" required>
@@ -112,8 +151,9 @@
                     <div id="filePreview" class="file-preview"></div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                    <div id="successMessage" class="alert alert-success">Pedido cadastrado com sucesso!</div>
+                    <button type="submit" class="btn">Cadastrar</button>
+                    <div id="successMessage" class="alert alert-success"><i class="fas fa-check-circle"></i> Pedido cadastrado com sucesso!</div>
+                    <div id="errorMessage" class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> Erro ao cadastrar pedido. Tente novamente.</div>
                 </div>
             </form>
         </div>
@@ -121,6 +161,7 @@
 
     <script>
         const BASE_ROUTE = "https://0455-2804-1054-3013-eba0-39f2-2a4a-4791-79db.ngrok-free.app/pedidos"
+
         // Exibe o nome do arquivo quando um arquivo é escolhido
         document.getElementById('comprovante').addEventListener('change', function () {
             const file = this.files[0];
@@ -144,22 +185,23 @@
             if (response.ok) {
                 // Exibe mensagem de sucesso
                 document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
                 e.target.reset(); // Limpa o formulário após o envio
             } else {
-                alert('Erro ao cadastrar pedido: ' + result.message);
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
             }
         });
 
         document.addEventListener('copy', function(e) {
-        e.preventDefault();
-        alert('Copiar está desativado.');
+            e.preventDefault();
+            alert('Copiar está desativado.');
         });
 
         document.addEventListener('paste', function(e) {
             e.preventDefault();
             alert('Colar está desativado.');
         });
-
     </script>
 </body>
 </html>
