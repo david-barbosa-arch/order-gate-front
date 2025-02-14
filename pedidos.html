@@ -124,7 +124,7 @@
     </div>
 
     <script>
-        const BASE_ROUTE = "https://0455-2804-1054-3013-eba0-39f2-2a4a-4791-79db.ngrok-free.app"
+        const BASE_ROUTE = "https://0455-2804-1054-3013-eba0-39f2-2a4a-4791-79db.ngrok-free.app/pedidos"
         
         async function carregarPedidos() {
             const response = await fetch(`${BASE_ROUTE}/pedidos`);
@@ -140,7 +140,7 @@
                     <td>${pedido.solicitante}</td>
                     <td>${pedido.produto}</td>
                     <td>${pedido.descricao}</td>
-                    <td>${pedido.comprovante ? `<a href=``${BASE_ROUTE}/${pedido.comprovante}`` target="_blank" class="btn btn-link"><i class="fas fa-eye"></i> Ver</a>` : 'Sem comprovante'}</td>
+                    <td>${pedido.comprovante ? `<a href="${BASE_ROUTE}/${pedido.comprovante}" target="_blank" class="btn btn-link"><i class="fas fa-eye"></i> Ver</a>` : 'Sem comprovante'}</td>
                 `;
                 tbody.appendChild(row);
             });
