@@ -1,0 +1,73 @@
+* {
+    user-select: none;
+    box-sizing: border-box;
+}
+body {
+    background-color: #121212;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 10px;
+    color: #fff;
+}
+
+a {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 10px;
+    color: #d9df22;
+}
+
+.container {
+    max-width: 900px;
+    margin: 80px auto;
+    background-color: #1f1f1f;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+.container:hover {
+    transform: translateY(-8px);
+}
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ff8c00;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
+.accordion {
+    max-width: 850px;
+    margin: auto;
+}
+.accordion-item {
+    background-color: #262626;
+    border: none;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.accordion-button {
+    background-color: #ff8c00;
+    color: #000;
+    font-weight: bold;
+    border-radius: 0;
+    padding: 18px;
+    font-size: 1.1rem;
+}
+.accordion-button:not(.collapsed) {
+    background-color: #e67e22;
+    color: #fff;
+}
+.accordion-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+    background-color: #333;
+    padding: 25px;
+    border-radius: 0 0 12px 12px;
+}
+.accordion-button:focus {
+    box-shadow: none;
+}
