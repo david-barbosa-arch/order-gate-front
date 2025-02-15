@@ -71,3 +71,8 @@ h2 {
 .accordion-button:focus {
     box-shadow: none;
 }
+span {
+    color: #fbff00;
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif
+}
