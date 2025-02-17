@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="form.css">
+    <link rel="icon" type="image/png" href="./assets/favicon.png">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="form-container">
+            <h2><i class="fas fa-dumbbell"></i> Cadastro de Pedido</h2>
+            <div class="blinking">Pedidos só até 17/02 às 14h</div> <!-- Aviso piscando -->
+            <form id="pedidoForm">
+                <div class="mb-4">
+                    <label for="solicitante" class="form-label"><i class="fas fa-user"></i> Solicitante</label>
+                    <input type="text" class="form-control" id="solicitante" name="solicitante" required placeholder="Digite o nome do solicitante">
+                </div>
+                <div class="mb-4">
+                    <label for="produto" class="form-label"><i class="fas fa-cogs"></i> Produto (s)</label>
+                    <input type="text" class="form-control" id="produto" name="produto" required placeholder="Digite os produtos desejados">
+                </div>
+                <div class="mb-4">
+                    <label for="descricao" class="form-label"><i class="fas fa-clipboard"></i> Descrição</label>
+                    <textarea class="form-control" placeholder="Diga se é Acetato, Enanato, mg, etc" id="descricao" name="descricao" rows="4" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="comprovante" class="form-label"><i class="fas fa-file-upload"></i> Comprovante</label>
+                    <label for="comprovante" class="file-label">
+                        <i class="fas fa-upload"></i> Escolher arquivo
+                        <input type="file" id="comprovante" class="file-input" name="comprovante" required>
+                    </label>
+                    <div id="filePreview" class="file-preview"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn">Cadastrar</button>
+                    <div id="successMessage" class="alert alert-success"><i class="fas fa-check-circle"></i> Pedido cadastrado com sucesso!</div>
+                    <div id="errorMessage" class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> Erro ao cadastrar pedido. Tente novamente.</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const BASE_ROUTE = "https://0455-2804-1054-3013-eba0-39f2-2a4a-4791-79db.ngrok-free.app/pedidos"
+
+        // Exibe o nome do arquivo quando um arquivo é escolhido
+        document.getElementById('comprovante').addEventListener('change', function () {
+            const file = this.files[0];
+            const filePreview = document.getElementById('filePreview');
+            if (file) {
+                filePreview.textContent = `Arquivo escolhido: ${file.name}`;
+            } else {
+                filePreview.textContent = '';
+            }
+        });
+
+        // Envio do formulário
+        document.getElementById('pedidoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch(`${BASE_ROUTE}`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            if (response.ok) {
+                // Exibe mensagem de sucesso
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                e.target.reset(); // Limpa o formulário após o envio
+            } else {
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            alert('Copiar está desativado.');
+        });
+
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            alert('Colar está desativado.');
+        });
+
+        document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        alert("O clique direito está desativado.");
+        });
+    </script>
+</body>
+</html>
