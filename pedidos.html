@@ -25,7 +25,7 @@
                         <span class="badge bg-info" id="pedidoCount">Carregando...</span> <!-- Contador -->
                     </div>
                     <!-- <button class="btn btn-danger" onclick="excluirTodosPedidos()"><i class="fas fa-trash"></i> Excluir Todos</button> -->
-                    <!-- <button class="btn btn-primary" onclick="gerarPDF()">Gerar PDF</button> -->
+                    <button class="btn btn-primary" id="total_recebido">Carregando...</button>
                 </div>
             </div>
             
@@ -103,7 +103,33 @@
         }
         
         carregarPedidos();
+
         
+
+        async function showTotalRecebido() {
+            try {
+                const response = await fetch(`${BASE_ROUTE}/pedidos/exibir_total_recebido`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'
+                    }
+                });
+
+                if (!response.ok) throw new Error("Erro ao buscar total recebido");
+
+                const data = await response.json(); // Agora retorna { total: valor }
+
+                total_recebido.textContent = `Total Recebido: ${data.total ?? 0}`;
+                
+            } catch (error) {
+                console.error("Erro ao obter total recebido:", error);
+                total_recebido.textContent = "Erro ao obter total";
+            }
+        }
+
+
+        showTotalRecebido()
+            
+
         document.addEventListener('copy', function(e) {
             e.preventDefault();
             alert('Copiar está desativado.');
