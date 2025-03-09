@@ -13,7 +13,7 @@
     <div class="container mt-5">
         <div class="form-container">
             <h2><i class="fas fa-dumbbell"></i> Cadastro de Pedido</h2>
-            <div class="blinking">Pedidos só até 17/02 às 14h</div> <!-- Aviso piscando -->
+            <div class="blinking">Pedidos só até 17/02 às 14h</div>
             <form id="pedidoForm">
                 <div class="mb-4">
                     <label for="solicitante" class="form-label"><i class="fas fa-user"></i> Solicitante</label>
@@ -22,6 +22,7 @@
                 <div class="mb-4">
                     <label for="produto" class="form-label"><i class="fas fa-cogs"></i> Produto (s)</label>
                     <input type="text" class="form-control" id="produto" name="produto" required placeholder="Digite os produtos desejados">
+                    
                 </div>
                 <div class="mb-4">
                     <label for="descricao" class="form-label"><i class="fas fa-clipboard"></i> Descrição</label>
@@ -44,54 +45,6 @@
         </div>
     </div>
 
-    <script>
-        const BASE_ROUTE = "https://0455-2804-1054-3013-eba0-39f2-2a4a-4791-79db.ngrok-free.app/pedidos"
-
-        // Exibe o nome do arquivo quando um arquivo é escolhido
-        document.getElementById('comprovante').addEventListener('change', function () {
-            const file = this.files[0];
-            const filePreview = document.getElementById('filePreview');
-            if (file) {
-                filePreview.textContent = `Arquivo escolhido: ${file.name}`;
-            } else {
-                filePreview.textContent = '';
-            }
-        });
-
-        // Envio do formulário
-        document.getElementById('pedidoForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const response = await fetch(`${BASE_ROUTE}`, {
-                method: 'POST',
-                body: formData
-            });
-            const result = await response.json();
-            if (response.ok) {
-                // Exibe mensagem de sucesso
-                document.getElementById('successMessage').style.display = 'block';
-                document.getElementById('errorMessage').style.display = 'none';
-                e.target.reset(); // Limpa o formulário após o envio
-            } else {
-                document.getElementById('successMessage').style.display = 'none';
-                document.getElementById('errorMessage').style.display = 'block';
-            }
-        });
-
-        document.addEventListener('copy', function(e) {
-            e.preventDefault();
-            alert('Copiar está desativado.');
-        });
-
-        document.addEventListener('paste', function(e) {
-            e.preventDefault();
-            alert('Colar está desativado.');
-        });
-
-        document.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-        alert("O clique direito está desativado.");
-        });
-    </script>
+    <script src="./assets/js/main.js"></script>
 </body>
 </html>
