@@ -1,4 +1,4 @@
-const BASE_ROUTE = "https://8292-2804-1054-301b-e490-50f3-d07e-ffb3-24f0.ngrok-free.app";
+const BASE_ROUTE = "https://21a4-2804-1054-301b-e490-50f3-d07e-ffb3-24f0.ngrok-free.app";
 const BASE_URI = "pedidos";
 
 // INIT - LISTA DE PEDIDOS - INIT
@@ -43,15 +43,26 @@ async function excluirTodosPedidos() {
 }
 
 (async function healthCheck() {
-    const response = await fetch(`${BASE_ROUTE}/healthCheck`, { headers: {'ngrok-skip-browser-warning': 'true'}})
-    const result = await response.json();    
-    
-    const text = document.createElement('li');
-    text.appendChild = result;
-
-    const healthCheckSpan = document.getElementById('healthCheck');
-    healthCheckSpan.appendChild(text)
-})()
+    try {
+      const response = await fetch(`${BASE_ROUTE}/healthCheck`, {
+        headers: { 'ngrok-skip-browser-warning': 'true' },
+      });
+      const result = await response.json();
+  
+      const p = document.createElement('p');
+      p.textContent = JSON.stringify(result.message, null, 2);
+  
+      const healthCheckSpan = document.getElementById('healthCheck');
+      healthCheckSpan.appendChild(p);
+  
+    } catch (error) {
+      console.error('Erro no health check:', error);
+      const p = document.createElement('p');
+      p.textContent = "App fora do ar, tente novamente mais tarde!";
+      const healthCheckSpan = document.getElementById('healthCheck');
+      healthCheckSpan.appendChild(p);
+    }
+  })();
 
 setInterval(healthCheck, 300000);
 
