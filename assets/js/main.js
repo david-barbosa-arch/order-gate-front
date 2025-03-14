@@ -1,4 +1,4 @@
-const BASE_ROUTE = "https://11d3-2804-1054-301b-e490-50f3-d07e-ffb3-24f0.ngrok-free.app";
+const BASE_ROUTE = "https://205a-2804-1054-301b-e490-50f3-d07e-ffb3-24f0.ngrok-free.app";
 const BASE_URI = "pedidos";
 
 // INIT - LISTA DE PEDIDOS - INIT
