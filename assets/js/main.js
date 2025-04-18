@@ -1,4 +1,4 @@
-const BASE_ROUTE = "https://4050-2804-1054-301b-e490-50f3-d07e-ffb3-24f0.ngrok-free.app";
+const BASE_ROUTE = "https://0875-2804-1054-301e-1b10-c4d6-515b-5e7d-5af.ngrok-free.app";
 const BASE_URI = "pedidos";
 
 // INIT - LISTA DE PEDIDOS - INIT
@@ -25,7 +25,6 @@ const BASE_URI = "pedidos";
             <td>${pedido.id}</td>
             <td>${pedido.solicitante}</td>
             <td>${pedido.produto}</td>
-            <td>${pedido.descricao}</td>
             <td>R$ ${pedido.valor_comprovante}</td>
             <td>${pedido.comprovante ? `<a href="${BASE_ROUTE}/${pedido.comprovante}" target="_blank" class="btn btn-link"><i class="fas fa-eye"></i> Ver</a>` : 'Sem comprovante'}</td>
         `;
